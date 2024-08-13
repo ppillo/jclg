@@ -1,27 +1,63 @@
-document.addEventListener("DOMContentLoaded", function () {
-  var controller = new ScrollMagic.Controller({ loglevel: 3 });
+// Controlador Singleton para ScrollMagic
+const ScrollController = (() => {
+  let instance;
 
-  // Crear escena para mostrar el título
-  var revealElements = document.getElementsByClassName("word");
-  for (var i = 0; i < revealElements.length; i++) {
-    new ScrollMagic.Scene({
-      triggerElement: revealElements[i],
-      //offset: 100, // Ajuste inicial para que se vea la animación más fácil
-      triggerHook: 0.80, // Activa la animación cuando el 80% de la sección entra en la vista
+  function createInstance() {
+    return new ScrollMagic.Controller({ loglevel: 3 });
+  }
 
-    })
-      .setClassToggle(revealElements[i], "visible") // Añadir clase cuando se active el trigger
-      .addTo(controller);
+  return {
+    getInstance() {
+      if (!instance) {
+        instance = createInstance();
+      }
+      return instance;
+    }
+  };
+})();
+
+/**
+ * Crea y devuelve una nueva escena de ScrollMagic.
+ * @param {HTMLElement} element - El elemento DOM que dispara la escena.
+ * @param {Object} options - Configuración de la escena.
+ * @param {number} options.triggerHook - Punto de activación (0 a 1).
+ * @param {string} options.classToggle - Clase CSS a añadir cuando se activa.
+ * @param {number} [options.offset=0] - Offset opcional para ajustar el punto de activación.
+ * @returns {ScrollMagic.Scene} La escena creada.
+ */
+const createScene = (element, { triggerHook, classToggle, offset = 0 }) => {
+  return new ScrollMagic.Scene({
+    triggerElement: element,
+    triggerHook,
+    offset
+  }).setClassToggle(element, classToggle).addTo(ScrollController.getInstance());
+};
+
+// Configuración para las escenas
+const config = {
+  reveal: {
+    triggerHook: 0.8,
+    classToggle: "visible"
+  },
+  links: {
+    triggerHook: 0.5,
+    offset: 0,
+    classToggle: "visible"
   }
-  // Nueva escena para mostrar la lista de vínculos
-  var links = document.getElementsByClassName("link");
-  for (var i = 0; i < links.length; i++) {
-    new ScrollMagic.Scene({
-      triggerElement: links[i],
-      offset: 0, // Ajuste inicial para que se vea la animación más fácil
-      triggerHook: 0.5 // Activa la animación cuando la sección entra en la vista
-    })
-      .setClassToggle(links[i], "visible") // Añade la clase visible para activar la animación
-      .addTo(controller);
-  }
-});
+};
+
+// Inicializar ScrollMagic y crear escenas
+const initializeScrollMagic = () => {
+  const revealElements = document.querySelectorAll(".word");
+  revealElements.forEach(el => createScene(el, config.reveal));
+
+  const links = document.querySelectorAll(".link");
+  links.forEach(el => createScene(el, config.links));
+};
+
+// Manejo robusto de errores
+try {
+  document.addEventListener("DOMContentLoaded", initializeScrollMagic);
+} catch (error) {
+  console.error("Error al inicializar ScrollMagic:", error);
+}
