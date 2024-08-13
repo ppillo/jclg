@@ -4,42 +4,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sitio de Ppillo</title>
+  <title>JCLG</title>
   <link rel="stylesheet" href="./css/pico.min.css" />
   <link rel="stylesheet" href="./css/main.css" />
 </head>
 
 <body>
-  <header>Menu</header>
-  <main class="container">
-    <section>
-      <div>
-        <p>Welcome! Here you'll discover some of my tech experiments, games, blogs, and other things I enjoy in my spare
-          time.</p>
-      </div>
-    </section>
-    <section>
-      <div id="card">
-        Haz clic para empezar
-      </div>
-      <div class="grid">
-        <div></div>
-      </div>
-      <div id="controls">
-        <label>
-          <input type="checkbox" id="shuffleCheckbox"> Mezclar cartas
-        </label>
-        <br><br>
-        <label for="speedRange">Velocidad: </label>
-        <input type="range" id="speedRange" min="1" max="10" value="3">
-        <span id="speedValue">3</span> segundos
-        <br><br>
-        <button id="restartBtn">Reiniciar</button>
-      </div>
-    </section>
-  </main>
+  <div id="bg-img"></div>
 
-  <script src="./js/script.js"></script>
+  <!-- Sección de nombre y puesto -->
+  <section class="intro"></section>
+  <div class="container">
+    <div>
+      <h1 class="box1 word" id="name">Jose Carlos Lopez</h1>
+      <h4 class="box1 word" id="title">Senior technology advisor</h4>
+    </div>
+  </div>
+
+  <!-- Sección con vínculos -->
+  <section class="container">
+    <aside class="vh-80">
+      <nav id="links-section" style="text-align: right;">
+        <ul class="links">
+          <li class="link">
+            <h4><a href="cv.html">Curriculum</a></h4>
+          </li>
+          <li class="link">
+            <h4><a href="projects.html">Projects</a></h4>
+          </li>
+          <li class="link">
+            <h4><a href="blog.html">Blog</a></h4>
+          </li>
+          <li class="link">
+            <div class="inline">
+              <a class="icon" href="https://x.com/ppill0" target="_blank" aria-label="X">
+                <img src="./images/x.svg" alt="X" width="24" height="24">
+              </a>
+              <a class="icon" href="https://www.linkedin.com/in/ppillo/" target="_blank" aria-label="LinkedIn">
+                <img src="./images/linkedin.svg" alt="LinkedIn" width="24" height="24">
+              </a>
+              <a class="icon" href="https://github.com/ppillo" target="_blank" aria-label="GitHub">
+                <img src="./images/github.svg" alt="github" width="24" height="24">
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
+  <script src="./js/scroll.js"></script>
 </body>
 
 </html>
