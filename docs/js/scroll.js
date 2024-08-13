@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   // Nueva escena para mostrar la lista de vínculos
   var links = document.getElementsByClassName("link");
-  console.log(links);
   for (var i = 0; i < links.length; i++) {
     new ScrollMagic.Scene({
       triggerElement: links[i],
