@@ -57,6 +57,49 @@
   </section>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
   <script src="./js/scroll.js"></script>
+
+  <!-- Script to remove Chatbase branding -->
+  <script>
+    // Function to remove the Chatbase branding element
+    function removeChatbaseBranding() {
+      const brandingElement = document.querySelector('[data-sentry-component="ChatbotChatbaseBranding"]');
+      if (brandingElement) {
+        brandingElement.remove();
+      }
+    }
+
+    // Try to remove immediately
+    removeChatbaseBranding();
+
+    // Also try after a short delay to catch dynamically added elements
+    setTimeout(removeChatbaseBranding, 1000);
+
+    // Use MutationObserver to catch elements added later
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'childList') {
+          mutation.addedNodes.forEach(function (node) {
+            if (node.nodeType === 1) { // Element node
+              if (node.hasAttribute && node.getAttribute('data-sentry-component') === 'ChatbotChatbaseBranding') {
+                node.remove();
+              }
+              // Also check child elements
+              const brandingChild = node.querySelector && node.querySelector('[data-sentry-component="ChatbotChatbaseBranding"]');
+              if (brandingChild) {
+                brandingChild.remove();
+              }
+            }
+          });
+        }
+      });
+    });
+
+    // Start observing
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  </script>
 </body>
 
 </html>
